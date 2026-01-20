@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Profesional de Materiales Drywall</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        min-height: 100vh;
+        padding: 20px;
+        color: #e2e8f0;
+    }
+    
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    
+    .card {
+        background: #1e293b;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+        margin-bottom: 20px;
+        border: 1px solid #334155;
+    }
+    
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #334155;
+    }
+    
+    .header h1 {
+        font-size: 28px;
+        color: #f1f5f9;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .icon {
+        width: 36px;
+        height: 36px;
+        color: #3b82f6;
+    }
+    
+    .config-btn {
+        padding: 12px 24px;
+        background: #334155;
+        border: 1px solid #475569;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s;
+        color: #e2e8f0;
+        font-size: 14px;
+    }
+    
+    .config-btn:hover {
+        background: #475569;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+    
+    .section {
+        margin-bottom: 25px;
+    }
+    
+    .section-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: #cbd5e1;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .button-group {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+    
+    .btn {
+        padding: 12px 28px;
+        border: 2px solid #475569;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 15px;
+        background: #334155;
+        color: #cbd5e1;
+    }
+    
+    .btn:hover {
+        background: #475569;
+        border-color: #64748b;
+    }
+    
+    .btn.active {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        color: white;
+        border-color: #3b82f6;
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+    }
+    
+    .btn.active-green {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        border-color: #10b981;
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+    }
+    
+    .config-panel {
+        display: none;
+        background: #0f172a;
+        padding: 25px;
+        border-radius: 12px;
+        border: 2px solid #3b82f6;
+        margin-bottom: 25px;
+    }
+    
+    .config-panel.show {
+        display: block;
+        animation: slideDown 0.3s ease-out;
+    }
+    
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .config-panel h3 {
+        color: #3b82f6;
+        margin-bottom: 20px;
+        font-size: 18px;
+    }
+    
+    .config-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+    }
+    
+    .config-section {
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #334155;
+    }
+    
+    .config-section-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #10b981;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+    }
+    
+    .input-group:last-child {
+        margin-bottom: 0;
+    }
+    
+    label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #94a3b8;
+        margin-bottom: 6px;
+    }
+    
+    input[type="number"] {
+        padding: 12px;
+        border: 2px solid #475569;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.2s;
+        background: #0f172a;
+        color: #f1f5f9;
+    }
+    
+    input[type="number"]:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+    
+    .input-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    
+    .calculate-btn {
+        width: 100%;
+        padding: 18px;
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+    }
+    
+    .calculate-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
+    }
+    
+    .calculate-btn:active {
+        transform: translateY(0);
+    }
+    
+    .results {
+        display: none;
+    }
+    
+    .results.show {
+        display: block;
+        animation: fadeIn 0.4s ease-out;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .result-header {
+        font-size: 24px;
+        font-weight: 700;
+        color: #f1f5f9;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .area-display {
+        background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        text-align: center;
+        border: 2px solid #475569;
+    }
+    
+    .area-display p {
+        color: #cbd5e1;
+        font-size: 16px;
+        font-weight: 600;
+    }
+    
+    .area-display span {
+        font-weight: 700;
+        color: #60a5fa;
+        font-size: 20px;
+    }
+    
+    .result-item {
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        border-left: 5px solid;
+        background: #1e293b;
+        transition: transform 0.2s;
+    }
+    
+    .result-item:hover {
+        transform: translateX(5px);
+    }
+    
+    .result-planchas {
+        border-color: #3b82f6;
+        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2);
+    }
+    
+    .result-parales {
+        border-color: #10b981;
+        box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
+    }
+    
+    .result-durmientes {
+        border-color: #f59e0b;
+        box-shadow: 0 4px 20px rgba(245, 158, 11, 0.2);
+    }
+    
+    .result-item h3 {
+        font-size: 18px;
+        font-weight: 700;
+        color: #cbd5e1;
+        margin-bottom: 12px;
+    }
+    
+    .result-value {
+        font-size: 48px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        line-height: 1;
+    }
+    
+    .result-planchas .result-value {
+        color: #3b82f6;
+    }
+    
+    .result-parales .result-value {
+        color: #10b981;
+    }
+    
+    .result-durmientes .result-value {
+        color: #f59e0b;
+    }
+    
+    .result-detail {
+        color: #94a3b8;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+    
+    .result-detail strong {
+        color: #cbd5e1;
+    }
+    
+    @media (max-width: 768px) {
+        .input-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .config-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .header {
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .header h1 {
+            font-size: 22px;
+        }
+        
+        .result-value {
+            font-size: 36px;
+        }
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <h1>
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                    </svg>
+                    Calculadora Profesional Drywall
+                </h1>
+                <button class="config-btn" onclick="toggleConfig()">⚙️ Configuración de Materiales</button>
+            </div>
+
+```
+        <!-- Unidades -->
+        <div class="section">
+            <div class="section-title">Unidad de Medida</div>
+            <div class="button-group">
+                <button class="btn" onclick="setUnit('metros')">Metros (m)</button>
+                <button class="btn active" onclick="setUnit('pies')">Pies (ft)</button>
+            </div>
+        </div>
+        
+        <!-- Configuración -->
+        <div id="configPanel" class="config-panel">
+            <h3>⚙️ Configuración de Materiales y Dimensiones</h3>
+            <div class="config-grid">
+                <!-- Planchas -->
+                <div class="config-section">
+                    <div class="config-section-title">📋 Planchas de Drywall</div>
+                    <div class="input-group">
+                        <label>Ancho de plancha (<span class="unit-label">ft</span>)</label>
+                        <input type="number" id="planchaAncho" value="4" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label>Alto de plancha (<span class="unit-label">ft</span>)</label>
+                        <input type="number" id="planchaAlto" value="8" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label>Desperdicio (%)</label>
+                        <input type="number" id="desperdicio" value="10" step="1" min="0" max="50">
+                    </div>
+                </div>
+                
+                <!-- Párales -->
+                <div class="config-section">
+                    <div class="config-section-title">🔧 Párales (Studs)</div>
+                    <div class="input-group">
+                        <label>Separación entre párales (<span class="unit-label">ft</span>)</label>
+                        <input type="number" id="paralSeparacion" value="1.33" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label>Longitud estándar (<span class="unit-label">ft</span>)</label>
+                        <input type="number" id="paralLongitud" value="10" step="0.1">
+                    </div>
+                </div>
+                
+                <!-- Durmientes -->
+                <div class="config-section">
+                    <div class="config-section-title">🏗️ Durmientes (Canales)</div>
+                    <div class="input-group">
+                        <label>Longitud estándar (<span class="unit-label">ft</span>)</label>
+                        <input type="number" id="durmienteLongitud" value="10" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" id="duplicarDurmientes" checked style="width: 20px; height: 20px; cursor: pointer;">
+                            Calcular por 2 (doble cantidad)
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <p style="margin-top: 20px; font-size: 13px; color: #94a3b8; text-align: center;">
+                💡 Valores por defecto basados en estándares de la industria. Ajusta según tu proyecto.
+            </p>
+        </div>
+        
+        <!-- Tipo de proyecto -->
+        <div class="section">
+            <div class="section-title">Tipo de Proyecto</div>
+            <div class="button-group">
+                <button class="btn active-green" onclick="setTipo('muro')">🧱 Muro</button>
+                <button class="btn" onclick="setTipo('techo')">🏠 Techo</button>
+            </div>
+        </div>
+        
+        <!-- Medidas -->
+        <div class="section">
+            <div class="section-title">Dimensiones del Proyecto</div>
+            <div class="input-grid">
+                <div class="input-group">
+                    <label>Largo (<span class="unit-label">ft</span>)</label>
+                    <input type="number" id="largo" placeholder="Ej: 15.00" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label id="anchoLabel">Ancho/Alto (<span class="unit-label">ft</span>)</label>
+                    <input type="number" id="ancho" placeholder="Ej: 8.00" step="0.01">
+                </div>
+            </div>
+        </div>
+        
+        <button class="calculate-btn" onclick="calcular()">🔍 Calcular Materiales</button>
+    </div>
+    
+    <!-- Resultados -->
+    <div id="results" class="card results">
+        <h2 class="result-header">📊 Materiales Necesarios</h2>
+        
+        <div class="area-display">
+            <p>Área Total del Proyecto: <span id="areaTotal">0</span> <span class="unit-label">ft</span>²</p>
+        </div>
+        
+        <div class="result-item result-planchas">
+            <h3>📋 Planchas de Drywall</h3>
+            <div class="result-value" id="resultPlanchas">0</div>
+            <div class="result-detail">
+                <strong>Unidades necesarias</strong><br>
+                Incluye <span id="porcentajeDesperdicio">10</span>% de desperdicio<br>
+                Área de cada plancha: <span id="areaPlanchaInfo">32</span> <span class="unit-label">ft</span>²
+            </div>
+        </div>
+        
+        <div class="result-item result-parales">
+            <h3>🔧 Párales (Studs)</h3>
+            <div class="result-value" id="resultParales">0</div>
+            <div class="result-detail">
+                <strong>Piezas de <span id="paralLongInfo">10</span> <span class="unit-label">ft</span></strong><br>
+                Longitud total necesaria: <span id="longitudParales">0</span> <span class="unit-label">ft</span><br>
+                Separación: <span id="paralSepInfo">1.33</span> <span class="unit-label">ft</span> (centro a centro)
+            </div>
+        </div>
+        
+        <div class="result-item result-durmientes">
+            <h3>🏗️ Durmientes (Canales)</h3>
+            <div class="result-value" id="resultDurmientes">0</div>
+            <div class="result-detail">
+                <strong>Piezas de <span id="durmienteLongInfo">10</span> <span class="unit-label">ft</span></strong><br>
+                Longitud total necesaria: <span id="longitudDurmientes">0</span> <span class="unit-label">ft</span><br>
+                <span id="durmienteDetalle">Para canales superior e inferior</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentUnit = 'pies';
+    let currentTipo = 'muro';
+    
+    function toggleConfig() {
+        const panel = document.getElementById('configPanel');
+        panel.classList.toggle('show');
+    }
+    
+    function setUnit(unit) {
+        currentUnit = unit;
+        const unitLabel = unit === 'metros' ? 'm' : 'ft';
+        
+        // Actualizar todos los labels de unidad
+        document.querySelectorAll('.unit-label').forEach(elem => {
+            elem.textContent = unitLabel;
+        });
+        
+        // Actualizar botones
+        const unitButtons = document.querySelectorAll('.section:first-of-type .btn');
+        unitButtons.forEach((btn, i) => {
+            btn.classList.toggle('active', (i === 0 && unit === 'metros') || (i === 1 && unit === 'pies'));
+        });
+        
+        // Actualizar valores por defecto según la unidad
+        if (unit === 'metros') {
+            document.getElementById('planchaAncho').value = '1.22';
+            document.getElementById('planchaAlto').value = '2.44';
+            document.getElementById('paralSeparacion').value = '0.41'; // 16 pulgadas
+            document.getElementById('paralLongitud').value = '3.05';
+            document.getElementById('durmienteLongitud').value = '3.05';
+            document.getElementById('largo').placeholder = 'Ej: 5.00';
+            document.getElementById('ancho').placeholder = 'Ej: 2.50';
+        } else {
+            document.getElementById('planchaAncho').value = '4';
+            document.getElementById('planchaAlto').value = '8';
+            document.getElementById('paralSeparacion').value = '1.33'; // 16 pulgadas
+            document.getElementById('paralLongitud').value = '10';
+            document.getElementById('durmienteLongitud').value = '10';
+            document.getElementById('largo').placeholder = 'Ej: 15.00';
+            document.getElementById('ancho').placeholder = 'Ej: 8.00';
+        }
+    }
+    
+    function setTipo(tipo) {
+        currentTipo = tipo;
+        
+        // Actualizar label según tipo
+        const anchoLabel = document.getElementById('anchoLabel');
+        const unitLabel = currentUnit === 'metros' ? 'm' : 'ft';
+        
+        if (tipo === 'muro') {
+            anchoLabel.innerHTML = `Altura (<span class="unit-label">${unitLabel}</span>)`;
+        } else {
+            anchoLabel.innerHTML = `Ancho (<span class="unit-label">${unitLabel}</span>)`;
+        }
+        
+        // Encontrar botones de tipo
+        const sections = document.querySelectorAll('.section');
+        let tipoSection = null;
+        
+        sections.forEach(section => {
+            const title = section.querySelector('.section-title');
+            if (title && title.textContent.includes('Tipo de Proyecto')) {
+                tipoSection = section;
+            }
+        });
+        
+        if (tipoSection) {
+            const buttons = tipoSection.querySelectorAll('.btn');
+            buttons.forEach((btn, i) => {
+                if ((i === 0 && tipo === 'muro') || (i === 1 && tipo === 'techo')) {
+                    btn.classList.add('active-green');
+                    btn.classList.remove('btn-secondary');
+                } else {
+                    btn.classList.remove('active-green');
+                    btn.classList.add('btn-secondary');
+                }
+            });
+        }
+    }
+    
+    function calcular() {
+        const largo = parseFloat(document.getElementById('largo').value);
+        const ancho = parseFloat(document.getElementById('ancho').value);
+        
+        if (!largo || !ancho || largo <= 0 || ancho <= 0) {
+            alert('Por favor ingresa dimensiones válidas para el proyecto');
+            return;
+        }
+        
+        // Obtener configuraciones
+        const planchaAncho = parseFloat(document.getElementById('planchaAncho').value);
+        const planchaAlto = parseFloat(document.getElementById('planchaAlto').value);
+        const desperdicio = parseFloat(document.getElementById('desperdicio').value) / 100;
+        const paralSeparacion = parseFloat(document.getElementById('paralSeparacion').value);
+        const paralLongitud = parseFloat(document.getElementById('paralLongitud').value);
+        const durmienteLongitud = parseFloat(document.getElementById('durmienteLongitud').value);
+        
+        const unitLabel = currentUnit === 'metros' ? 'm' : 'ft';
+        
+        // Calcular área
+        const area = largo * ancho;
+        const areaPlanchas = planchaAncho * planchaAlto;
+        
+        // Calcular planchas con desperdicio
+        const planchasSinDesperdicio = area / areaPlanchas;
+        const planchas = Math.ceil(planchasSinDesperdicio * (1 + desperdicio));
+        
+        // Calcular párales (usando fórmula mejorada)
+        const numParales = Math.ceil(largo / paralSeparacion) + 1;
+        const longitudTotalParales = numParales * ancho;
+        const piezasParales = Math.ceil(longitudTotalParales / paralLongitud);
+        
+        // Calcular durmientes
+        let longitudDurmientes;
+        let durmienteDetalle;
+        
+        if (currentTipo === 'muro') {
+            longitudDurmientes = largo * 2; // Superior e inferior
+            durmienteDetalle = 'Para canales superior e inferior';
+        } else {
+            longitudDurmientes = 2 * (largo + ancho); // Perímetro completo
+            durmienteDetalle = 'Para perímetro completo del techo';
+        }
+        
+        // Verificar si se debe duplicar
+        const duplicarDurmientes = document.getElementById('duplicarDurmientes').checked;
+        let piezasDurmientes = Math.ceil(longitudDurmientes / durmienteLongitud);
+        
+        if (duplicarDurmientes) {
+            piezasDurmientes = piezasDurmientes * 2;
+            durmienteDetalle += ' <strong>(×2 para mejor cuenta)</strong>';
+        }
+        
+        // Mostrar resultados
+        document.getElementById('areaTotal').textContent = area.toFixed(2);
+        document.getElementById('resultPlanchas').textContent = planchas;
+        document.getElementById('porcentajeDesperdicio').textContent = (desperdicio * 100).toFixed(0);
+        document.getElementById('areaPlanchaInfo').textContent = areaPlanchas.toFixed(2);
+        
+        document.getElementById('resultParales').textContent = piezasParales;
+        document.getElementById('longitudParales').textContent = longitudTotalParales.toFixed(2);
+        document.getElementById('paralLongInfo').textContent = paralLongitud.toFixed(2);
+        document.getElementById('paralSepInfo').textContent = paralSeparacion.toFixed(2);
+        
+        document.getElementById('resultDurmientes').textContent = piezasDurmientes;
+        document.getElementById('longitudDurmientes').textContent = longitudDurmientes.toFixed(2);
+        document.getElementById('durmienteLongInfo').textContent = durmienteLongitud.toFixed(2);
+        document.getElementById('durmienteDetalle').innerHTML = durmienteDetalle;
+        
+        // Mostrar resultados con animación
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.classList.add('show');
+        
+        // Scroll suave a resultados
+        setTimeout(() => {
+            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+    }
+    
+    // Inicializar con valores por defecto
+    setUnit('pies');
+    setTipo('muro');
+</script>
+```
+
+</body>
+</html>
